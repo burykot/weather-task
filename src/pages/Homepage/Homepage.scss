@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.homepage {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background: $color-main;
+
+    &__headline {
+        font-size: 36px;
+        padding: 0 0 30px;
+    }
+}

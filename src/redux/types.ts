@@ -1,11 +1,17 @@
-import { TCityWeatherInfo } from "../components/CityWeatherInfo/CityWeatherInfo";
+import { TWeatherInfo } from "../api/getWeather";
 
 export enum ACTION_TYPES {
-    SET_CURRENTID,
-    ADD_CITY
+    ADD_CITY = "ADD_CITY",
+    ADD_CURRENT_CITY = "ADD_CURRENT_CITY",
+    SET_CURRENT_CITY = "SET_CURRENT_CITY"
+};
+
+export type TCityWeatherInfo = {
+    city: string;
+    weather: TWeatherInfo
 };
 
 export type TState = {
-    currentCityIndex: number | null,
-    cities: TCityWeatherInfo[]
+    currentCity: TCityWeatherInfo | null;
+    cities: TCityWeatherInfo[];
 };

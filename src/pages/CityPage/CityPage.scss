@@ -40,6 +40,10 @@
         &__city-wrapper {
             flex: 0 0 50%;
             padding: 20px;
+
+            @include breakpoint(l) {
+                padding: 50px 20px;
+            }
         }
 
         &__comparison-wrapper {

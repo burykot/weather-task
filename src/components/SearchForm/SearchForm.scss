@@ -12,6 +12,10 @@
         flex-direction: row;
     }
 
+    &__input-wrapper {
+        position: relative;
+    }
+
     &__input {
         padding: 10px;
         width: 100%;
@@ -25,7 +29,17 @@
 
             font-size: 20px;
         }
+
+        &--error {
+            border-color: red;
+        }
     }
+
+        &__errormsg {
+            position: absolute;
+            font-weight: bold;
+            padding: 0 0 0 10px;
+        }
 
     &__button {
         width: 100%;

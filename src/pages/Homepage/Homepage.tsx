@@ -1,14 +1,13 @@
 import React from 'react';
 
-import './Homepage.scss';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
+import { SimplePageLayout } from '../../components/SimplePageLayout/SimplePageLayout';
 
 const Homepage = () => {
     return (
-        <div className="homepage">
-            <h1 className="homepage__headline">Sprawdź pogodę</h1>
+        <SimplePageLayout headline="Check weather">
             <SearchForm />
-        </div>
+        </SimplePageLayout>
     )
 };
 

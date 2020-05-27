@@ -1,0 +1,50 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.citypage {
+    &__search-form-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+
+        background: $color-main;
+
+        @include breakpoint(l) {
+            padding: 30px 0;
+        }
+    }
+
+        &__search-headline {
+            font-size: 25px;
+            font-weight: bold;
+            padding: 0 0 20px 0;
+
+            @include breakpoint(l) {
+                font-size: 30px;
+            }
+        }
+    
+    &__results-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        
+        @include breakpoint(l) {
+            flex-direction: row;
+        }
+    }
+
+        &__city-wrapper {
+            flex: 0 0 50%;
+            padding: 20px;
+        }
+
+        &__comparison-wrapper {
+            flex: 0 0 50%;
+            background: $color-grey-light;
+            padding: 20px;
+        }
+}

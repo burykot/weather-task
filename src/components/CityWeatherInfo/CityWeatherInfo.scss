@@ -1,0 +1,9 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.city-weather-info {
+    &__city-name {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

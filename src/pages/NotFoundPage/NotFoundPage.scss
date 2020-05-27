@@ -1,0 +1,9 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.not-found-page {
+    &__link {
+        text-decoration: none;
+        color: $color-grey-dark;
+    }
+}

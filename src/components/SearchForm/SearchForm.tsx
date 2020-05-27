@@ -15,6 +15,7 @@ const SearchForm = () => {
             setIsLoading(true);
             // TODO: fetch and redirect to search result/handle errors
             // setIsLoading(false);
+            
         }
     };
 
@@ -23,10 +24,11 @@ const SearchForm = () => {
             <input
                 className="search-form__input"
                 type="text"
-                placeholder="Szukaj miasta, np. Berlin, Wrocław..."
+                placeholder="np. Berlin, Wrocław..."
                 onChange={handlers.onInputChange}
                 value={inputText}
                 readOnly={isLoading}
+                required
             />
             <button
                 className="search-form__button"

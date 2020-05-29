@@ -51,4 +51,14 @@
             background: $color-grey-light;
             padding: 20px;
         }
+
+        &__comparison-headline {
+            font-size: 25px;
+            font-weight: bold;
+            padding: 0 0 20px 0;
+
+            @include breakpoint(l) {
+                font-size: 30px;
+            }
+        }
 }

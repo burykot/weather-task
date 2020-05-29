@@ -1,12 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './CurrentCityWeather.scss'
 import { Spinner } from '../Spinner/Spinner';
-import { useSelector } from 'react-redux';
-import { TState } from '../../redux/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { TState, ACTION_TYPES } from '../../redux/types';
+import { getWeather, TWeatherError } from '../../api/getWeather';
+import { useHistory } from 'react-router-dom';
 
-export const CurrentCityWeather: React.FC = () => {
-    const currentCity = useSelector((state: TState) => state.currentCity)
+interface ICurrentCityWeather {
+    city: string;
+}
+
+export const CurrentCityWeather: React.FC<ICurrentCityWeather> = ({ city }) => {
+    const [ errorMsg, setErrorMsg ] = useState('');
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const currentCity = useSelector((state: TState) => state.currentCity);
+
+    useEffect(() => {
+        if(!currentCity) {
+            const fetchWeather = async () => {
+                const result = await getWeather(city);
+                if(result.success) {
+                    dispatch({
+                        type: ACTION_TYPES.ADD_CURRENT_CITY,
+                        payload: {
+                            city: city,
+                            weather: {...result.data}
+                        }
+                    })
+                } else {
+                    const error = (result.data as TWeatherError);
+                    if(error.code === 404) {
+                        history.push('/404')
+                    }
+                    setErrorMsg( `${error.message}` )
+                }
+            }
+            fetchWeather()
+        };
+    }, [currentCity, city]);
 
     return (
         <div className="current-city-weather">
@@ -38,8 +72,13 @@ export const CurrentCityWeather: React.FC = () => {
                     </div>
                 </>
             ) : (
-                <Spinner />
+                <>
+                    { !errorMsg && <Spinner /> }
+                </>
             )}
+            {errorMsg && <div className="current-city-weather__error">
+                {errorMsg}
+            </div>}
         </div>
     )
 };

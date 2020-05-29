@@ -10,11 +10,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import './styles/App.scss';
 import { Homepage } from './pages/Homepage/Homepage';
-import { CityPageWithRouter } from './pages/CityPage/CityPage';
+import { CityPage } from './pages/CityPage/CityPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { weatherReducer } from './redux/weatherReducer';
 
-const store = createStore(weatherReducer, composeWithDevTools())
+export const store = createStore(weatherReducer, composeWithDevTools())
 
 function App() {
   return (
@@ -24,8 +24,11 @@ function App() {
                 <Route exact path="/">
                     <Homepage />
                 </Route>
+                <Route path="/404">
+                    <NotFoundPage />
+                </Route>
                 <Route exact path="/:city">
-                    <CityPageWithRouter />
+                    <CityPage />
                 </Route>
                 <Route path="*">
                     <NotFoundPage />

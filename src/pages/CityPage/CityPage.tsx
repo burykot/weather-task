@@ -1,11 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './CityPage.scss';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
 import { CurrentCityWeather } from '../../components/CurrentCityWeather/CurrentCityWeather';
 
-const CityPage: React.FC = () => {
+interface ICityPage {
+    city: string;
+}
+
+const CityP: React.FC<RouteComponentProps<ICityPage>> = ({ match }) => {
+    const city = match.params.city;
 
     return (
         <div className="citypage">
@@ -15,7 +20,7 @@ const CityPage: React.FC = () => {
             </div>
             <div className="citypage__results-wrapper">
                 <div className="citypage__city-wrapper">
-                    <CurrentCityWeather /> 
+                    <CurrentCityWeather city={city}/> 
                 </div>
                 <div className="citypage__comparison-wrapper">
                     comparison
@@ -25,6 +30,4 @@ const CityPage: React.FC = () => {
     )
 };
 
-const CityPageWithRouter = withRouter(CityPage);
-
-export { CityPageWithRouter };
+export const CityPage = withRouter(CityP)

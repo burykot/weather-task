@@ -14,6 +14,7 @@ export type TWeatherInfo = {
 
 export type TWeatherError = {
     message: string;
+    code?: number
 }
 
 const getWeather = async ( cityName: string ): Promise<IGetWeather> => {
@@ -35,7 +36,8 @@ const getWeather = async ( cityName: string ): Promise<IGetWeather> => {
             return {
                 success: false,
                 data: {
-                    message: 'City not found'
+                    message: 'City not found',
+                    code: 404
                 }
             }
         } else {

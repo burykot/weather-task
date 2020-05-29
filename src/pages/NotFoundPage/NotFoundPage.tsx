@@ -6,7 +6,7 @@ import { SimplePageLayout } from '../../components/SimplePageLayout/SimplePageLa
 
 const NotFoundPage = () => {
     return (
-        <SimplePageLayout headline="404, page not found">
+        <SimplePageLayout headline="404, location not found">
             <Link to="/" className="not-found-page__link">← go to search</Link>
         </SimplePageLayout>
     )

@@ -1,0 +1,72 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.other-city-weather {
+    display: flex;
+    padding: 0 0 20px 0;
+    font-size: 18px;
+
+    &__label {
+        flex: 0 0 30%;
+        font-weight: bold;
+    }
+
+    &__temperature, &__conditions, &__wind  {
+        display: flex;
+        flex: 0 1 18%;
+        padding: 0 0 0 10px;
+    }
+
+    &__temperature-differences {
+        font-weight: bold;
+        position: relative;
+        font-size: 14px;
+        align-self: flex-end;
+        padding: 0 0 0 12px;
+
+        &--hotter {
+            color: red;
+
+            &:before {
+                @include arrow;
+                border-bottom: 8px solid red;
+            }
+        }
+
+        &--colder {
+            color: blue;
+
+            &:before {
+                @include arrow;
+                border-top: 8px solid blue;
+            }
+        }
+
+    }
+
+    &__wind-differences {
+        position: relative;
+
+        font-weight: bold;
+        font-size: 14px;
+        align-self: flex-end;
+        padding: 0 0 0 12px;
+
+        &--stronger {
+            color: blue;
+
+            &:before {
+                @include arrow;
+                border-bottom: 8px solid blue;
+            }
+        }
+
+        &--weaker {
+            &:before {
+                @include arrow;
+                border-top: 8px solid #333;
+            }
+        }
+
+    }
+}

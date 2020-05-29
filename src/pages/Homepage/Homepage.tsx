@@ -5,7 +5,7 @@ import { SimplePageLayout } from '../../components/SimplePageLayout/SimplePageLa
 
 const Homepage = () => {
     return (
-        <SimplePageLayout headline="Check weather">
+        <SimplePageLayout headline="Search for a city">
             <SearchForm />
         </SimplePageLayout>
     )

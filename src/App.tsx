@@ -24,9 +24,6 @@ function App() {
                 <Route exact path="/">
                     <Homepage />
                 </Route>
-                <Route path="/404">
-                    <NotFoundPage />
-                </Route>
                 <Route exact path="/:city">
                     <CityPage />
                 </Route>

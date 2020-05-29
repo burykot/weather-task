@@ -31,27 +31,26 @@ const SearchForm = () => {
             const storedCity = storedCities.find(city => city.city.toLowerCase() === inputText.toLowerCase())
             
             if(storedCity) {
-                dispatch({
-                    type: ACTION_TYPES.SET_CURRENT_CITY,
-                    payload: storedCity
-                })
+                setIsLoading(false);
+                history.push(`/${inputText}`)
             } else {
                 const result = await getWeather(inputText);
                 if(result.success) {
+                    setIsLoading(false);
                     dispatch({
-                        type: ACTION_TYPES.ADD_CURRENT_CITY,
+                        type: ACTION_TYPES.ADD_CITY,
                         payload: {
                             city: inputText,
                             weather: {...result.data}
                         }
-                    })
+                    });
                     history.push(`/${inputText}`)
                 } else {
                     setErrorMsg( (result.data as TWeatherError).message )
+                    setIsLoading(false);
                 }
             };
         
-            setIsLoading(false);
         }
     };
     

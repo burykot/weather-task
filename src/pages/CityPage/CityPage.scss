@@ -42,7 +42,7 @@
             padding: 20px;
 
             @include breakpoint(l) {
-                padding: 50px 20px;
+                padding: 50px;
             }
         }
 
@@ -50,6 +50,10 @@
             flex: 0 0 50%;
             background: $color-grey-light;
             padding: 20px;
+
+            @include breakpoint(l) {
+                padding: 50px;
+            }
         }
 
         &__comparison-headline {
@@ -61,4 +65,12 @@
                 font-size: 30px;
             }
         }
+
+    &__error {
+        display: flex;
+        justify-content: center;
+        padding: 50px 20px;
+        font-size: 30px;
+        font-weight: bold;
+    }
 }

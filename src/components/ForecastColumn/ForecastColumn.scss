@@ -1,0 +1,7 @@
+
+.forecast-column {
+    padding: 0 10px;
+    &__temperature, &__conditions, &__wind {
+        padding: 0 0 10px 0;
+    }
+}

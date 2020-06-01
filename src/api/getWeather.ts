@@ -6,6 +6,7 @@ interface IGetWeather {
 };
 
 export type TWeatherInfo = {
+    cityId: number
     temperature: number;
     weatherConditions: string;
     windSpeed: number;
@@ -15,7 +16,7 @@ export type TWeatherInfo = {
 export type TWeatherError = {
     message: string;
     code?: number
-}
+};
 
 const getWeather = async ( cityName: string, cancelTokenSource?: CancelTokenSource ): Promise<IGetWeather> => {
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
@@ -25,6 +26,7 @@ const getWeather = async ( cityName: string, cancelTokenSource?: CancelTokenSour
         return {
             success: true,
             data: {
+                cityId: response.data.id,
                 temperature: response.data.main.temp,
                 weatherConditions: response.data.weather[0].main,
                 windSpeed: response.data.wind.speed,

@@ -7,8 +7,9 @@ import './CityPage.scss';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
 import { CurrentCityWeather } from '../../components/CurrentCityWeather/CurrentCityWeather';
 import { WeatherComparison } from '../../components/WeatherComparison/WeatherComparison';
-import { TState, ACTION_TYPES } from '../../redux/types';
-import { getWeather, TWeatherError } from '../../api/getWeather';
+import { TState } from '../../redux/types';
+import { getWeather, TWeatherError, TWeatherInfo } from '../../api/getWeather';
+import { setCurrentCity, addCurrentCity } from '../../redux/actions';
 
 interface ICityPage {
     city: string;
@@ -26,22 +27,13 @@ const CityP: React.FC<RouteComponentProps<ICityPage>> = ({ match }) => {
     useEffect(() => {
         if(storedCity) {
             setErrorMsg('');
-            dispatch({
-                type: ACTION_TYPES.SET_CURRENT_CITY,
-                payload: { ...storedCity }
-            });
+            dispatch(setCurrentCity(storedCity));
         } else {
             const fetchWeather = async () => {
                 const result = await getWeather(city, cancelTokenSource);
                 if(result.success) {
                     setErrorMsg('');
-                    dispatch({
-                        type: ACTION_TYPES.ADD_CURRENT_CITY,
-                        payload: {
-                            city: city,
-                            weather: {...result.data}
-                        }
-                    });
+                    dispatch(addCurrentCity(city, result.data as TWeatherInfo));
                 } else {
                     const error = (result.data as TWeatherError);
                     setErrorMsg(error.message);

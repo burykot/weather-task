@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Axios from 'axios';
 
-import { TState, ACTION_TYPES } from '../../redux/types';
+import { TState } from '../../redux/types';
 import './OtherCityWeather.scss';
-import { getWeather } from '../../api/getWeather';
+import { getWeather, TWeatherInfo } from '../../api/getWeather';
 import { getCelsiusFromKelvin } from '../../utils/getCelsiusFromKelvin';
+import { addCity } from '../../redux/actions';
 
 interface IOtherCityWeather {
     city: string;
@@ -29,13 +30,7 @@ export const OtherCityWeather: React.FC<IOtherCityWeather> = ({ city }) => {
             const fetchWeather = async () => {
                 const result = await getWeather(city, cancelTokenSource);
                 if(result.success) {
-                    dispatch({
-                        type: ACTION_TYPES.ADD_CITY,
-                        payload: {
-                            city: city,
-                            weather: {...result.data}
-                        }
-                    })
+                    dispatch(addCity(city, result.data as TWeatherInfo))
                 }
                 // city will not be shown on error
             }

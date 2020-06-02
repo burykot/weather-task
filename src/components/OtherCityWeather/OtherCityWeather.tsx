@@ -7,6 +7,7 @@ import './OtherCityWeather.scss';
 import { getWeather, TWeatherInfo } from '../../api/getWeather';
 import { getCelsiusFromKelvin } from '../../utils/getCelsiusFromKelvin';
 import { addCity } from '../../redux/actions';
+import { useCityData } from '../../utils/useCityData';
 
 interface IOtherCityWeather {
     city: string;
@@ -17,16 +18,16 @@ export const OtherCityWeather: React.FC<IOtherCityWeather> = ({ city }) => {
     const [ windDiff, setWindDiff ] = useState(0);
     const dispatch = useDispatch();
 
-    const storedCities = useSelector((state: TState) => {
-        return {
-            searched: state.currentCity,
-            thisCity: state.cities.find(element => element.city.toLowerCase() === city.toLowerCase())
-        }
-    })
+    const searchedCity = useSelector((state: TState) => {
+        return state.cities.find(city => city.cityId === state.currentCityId)
+    });
+
+    const { storedCity } = useCityData(city)
 
     const cancelTokenSource = Axios.CancelToken.source();
     useEffect(() => {
-        if(!storedCities.thisCity && storedCities.searched) {
+        if(!storedCity) {
+
             const fetchWeather = async () => {
                 const result = await getWeather(city, cancelTokenSource);
                 if(result.success) {
@@ -37,19 +38,16 @@ export const OtherCityWeather: React.FC<IOtherCityWeather> = ({ city }) => {
             fetchWeather();
         };
 
-        if(storedCities.thisCity && storedCities.searched) {
+        if(storedCity && searchedCity ) {
             // set values of differences in weather
-            const thisCityWeather = storedCities.thisCity.weather;
-            const searchedCityWeather = storedCities.searched.weather;
-
-            setTemperatureDiff( getCelsiusFromKelvin(thisCityWeather.temperature) - getCelsiusFromKelvin(searchedCityWeather.temperature) )
-            setWindDiff( +(thisCityWeather.windSpeed - searchedCityWeather.windSpeed).toFixed(2) )
+            setTemperatureDiff( getCelsiusFromKelvin(storedCity.weather.temperature) - getCelsiusFromKelvin(searchedCity.weather.temperature) )
+            setWindDiff( +(storedCity.weather.windSpeed - searchedCity.weather.windSpeed).toFixed(2) )
         };
 
         return function cleanup() {
             cancelTokenSource.cancel();
         };
-    }, [city, storedCities.searched, storedCities.thisCity, cancelTokenSource, dispatch]);
+    }, [city, storedCity, searchedCity, cancelTokenSource, dispatch]);
 
     const temperatureDiffClassList = [
         'other-city-weather__temperature-differences',
@@ -63,11 +61,11 @@ export const OtherCityWeather: React.FC<IOtherCityWeather> = ({ city }) => {
         windDiff && windDiff < 0 ? 'other-city-weather__wind-differences--weaker' : ''
     ].join(' ');
 
-    return storedCities.thisCity ? (
+    return storedCity ? (
         <div className="other-city-weather">
             <div className="other-city-weather__label">{city}</div>
             <div className="other-city-weather__temperature">
-                {getCelsiusFromKelvin(storedCities.thisCity.weather.temperature)}ºC
+                {getCelsiusFromKelvin(storedCity.weather.temperature)}ºC
                 {temperatureDiff !== 0 && temperatureDiff && (
                     <div className={temperatureDiffClassList}>
                         {Math.abs(temperatureDiff)}º
@@ -75,10 +73,10 @@ export const OtherCityWeather: React.FC<IOtherCityWeather> = ({ city }) => {
                 )}
             </div>
             <div className="other-city-weather__conditions">
-                {storedCities.thisCity.weather.weatherConditions}
+                {storedCity.weather.weatherConditions}
             </div>
             <div className="other-city-weather__wind">
-                {storedCities.thisCity.weather.windSpeed}
+                {storedCity.weather.windSpeed}
                 {windDiff !== 0 && windDiff && (
                     <div className={windDiffClassList}>
                         {Math.abs(windDiff)}
